@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блокировка выхода!</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: black;
+      color: #00ff00;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .terminal {
+      width: 80%;
+      max-width: 600px;
+      height: 70%;
+      overflow-y: auto;
+      padding: 20px;
+      border: 2px solid #00ff00;
+      background-color: black;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+    .button {
+      padding: 20px 40px;
+      margin-top: 20px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .button:hover {
+      background-color: #cc0000;
+    }
+  </style>
+  <script>
+    let attemptCount = 0;
+
+    // Эмуляция терминала
+    function terminalPrint(message) {
+      const terminal = document.getElementById('terminal');
+      const line = document.createElement('div');
+      line.textContent = message;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    // Попытка выхода
+    function blockExit() {
+      attemptCount++;
+      if (attemptCount < 3) {
+        terminalPrint('Попытка выхода заблокирована!');
+        terminalPrint('Обход системы неудачен...');
+        terminalPrint('Попытка снова...');
+      } else {
+        terminalPrint('Система взломана! Можно выйти.');
+        document.getElementById('button').style.display = 'block';
+      }
+    }
+
+    // Блокировка кнопки назад
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function() {
+      window.history.pushState(null, null, window.location.href);
+      alert("Ты не можешь уйти! 😂");
+    };
+
+    // Блокировка закрытия страницы
+    window.onbeforeunload = function() {
+      return "Ты не можешь закрыть страницу без выполнения задачи!";
+    };
+
+    // Запуск хакерского интерфейса
+    function startHack() {
+      terminalPrint('Запуск системы...');
+      setTimeout(() => terminalPrint('Система подключена!'), 1000);
+      setTimeout(() => terminalPrint('Ищем уязвимости...'), 2000);
+      setTimeout(() => terminalPrint('Ошибка: Выход заблокирован!'), 3000);
+      setTimeout(() => blockExit(), 5000);
+      setTimeout(() => blockExit(), 7000);
+    }
+
+    // Снятие блокировки
+    function unlockSystem() {
+      alert("Система разблокирована! Ты можешь выйти.");
+      window.onbeforeunload = null; // Разрешаем закрывать вкладку
+      window.onpopstate = null;  // Разрешаем возвращаться назад
+      window.location.reload();  // Перезагружаем страницу для нормального выхода
+    }
+
+    // Инициализация
+    window.onload = function() {
+      startHack(); // Запуск интерфейса
+    };
+  </script>
+</head>
+<body>
+  <div id="terminal" class="terminal">
+    <div>Добро пожаловать в систему.</div>
+    <div>Инициализация...</div>
+  </div>
+  <button id="button" class="button" style="display: none;" onclick="unlockSystem()">Разблокировать выход</button>
+</body>
+</html>
