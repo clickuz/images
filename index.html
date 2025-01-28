@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сюрприз</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #fbe7c6;
+    }
+    .container {
+      text-align: center;
+    }
+    .message {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #ff6f61;
+    }
+    .button {
+      padding: 15px 30px;
+      font-size: 18px;
+      color: white;
+      background-color: #ff6f61;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #ff4d4d;
+    }
+  </style>
+  <script>
+    // Перехват закрытия вкладки
+    window.onbeforeunload = function () {
+      return "Ты уверена, что хочешь уйти? 🥺";
+    };
+
+    // Принудительное возвращение пользователя на страницу
+    let preventNavigation = true;
+    window.addEventListener("popstate", function (event) {
+      if (preventNavigation) {
+        history.pushState(null, null, document.URL); // Возвращаем состояние
+        alert("Эй! Ты должна меня поцеловать, прежде чем уйти! 😘");
+      }
+    });
+
+    // Установка состояния в историю
+    history.pushState(null, null, document.URL);
+
+    // Ловушка для фокуса (всплывающее окно)
+    let prankActive = true;
+    setInterval(function () {
+      if (prankActive) {
+        alert("Ты не можешь уйти, пока не нажмешь на кнопку! 😜");
+      }
+    }, 5000); // Каждые 5 секунд показываем сообщение
+
+    // Снимаем ограничения после нажатия на кнопку
+    function kissMe() {
+      alert("Спасибо за поцелуй! 😘 Теперь ты можешь уйти.");
+      preventNavigation = false; // Разрешаем уходить
+      prankActive = false; // Останавливаем всплывающие окна
+      window.onbeforeunload = null; // Убираем блокировку закрытия
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="message">Поцелуй меня, и я тебя отпущу! 😘</div>
+    <button class="button" onclick="kissMe()">Поцеловать</button>
+  </div>
+</body>
+</html>
